@@ -1,6 +1,6 @@
 package com.ecommerce.product.service.mappers;
 
-import com.ecommerce.product.service.dtos.UserDto;
+import com.ecommerce.product.service.dtos.usersDtos.UserDto;
 import com.ecommerce.product.service.entity.User;
 import org.mapstruct.Mapper;
 
