@@ -4,6 +4,7 @@ import com.ecommerce.product.service.dtos.usersDtos.ChangePasswordRequest;
 import com.ecommerce.product.service.dtos.usersDtos.RegisterUserRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UpdateUserRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UserDto;
+import com.ecommerce.product.service.entity.Role;
 import com.ecommerce.product.service.entity.User;
 import com.ecommerce.product.service.exception.AccessDeniedException;
 import com.ecommerce.product.service.exception.DuplicateUserException;
@@ -43,7 +44,9 @@ public class UserService {
         }
             request.setPassword( passwordEncoder.encode(request.getPassword()) );
             var user = this.toEntity(request);
+            user.setRole(Role.USER);
             userRepository.save(user);
+
             return this.toUserDto(user);
     }
     public UserDto updateUser(Long id, UpdateUserRequest request){
@@ -57,7 +60,7 @@ public class UserService {
     }
     public void changePassword(Long userId, ChangePasswordRequest request) {
         var user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException("User not found with id "+ userId));
-        if (!request.getOldPassword().equals(user.getPassword())) {
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new AccessDeniedException("Password does not match");
         }
         user.setPassword(request.getNewPassword());

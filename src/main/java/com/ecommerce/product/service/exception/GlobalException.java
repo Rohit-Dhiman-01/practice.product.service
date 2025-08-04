@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 public class GlobalException {
 
-    @ExceptionHandler({AccessDeniedException.class})
+    @ExceptionHandler({AccessDeniedException.class,
+                       BadCredentialsException.class})
     public ResponseEntity<ErrorDto> handleUnauthorized (RuntimeException exception){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).
             body(new ErrorDto(exception.getMessage(),HttpStatus.UNAUTHORIZED.value()));
