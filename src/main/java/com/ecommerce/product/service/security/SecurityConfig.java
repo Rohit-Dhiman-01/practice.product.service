@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final List<SecurityRules> featureSecurityRules;
+    private final List<SecurityRules> securityRules;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -58,7 +58,7 @@ public class SecurityConfig {
                         c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(c -> {
-                            featureSecurityRules.forEach(r -> r.configure(c));
+                            securityRules.forEach(r -> r.configure(c));
                             c.anyRequest().authenticated();
                         }
                 )

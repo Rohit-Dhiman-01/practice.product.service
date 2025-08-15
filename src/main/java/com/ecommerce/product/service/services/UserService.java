@@ -52,6 +52,7 @@ public class UserService {
     public UserDto updateUser(Long id, UpdateUserRequest request){
         var user = userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found with id "+ id));
         this.update(request,user);
+        userRepository.save(user);
         return this.toUserDto(user);
     }
     public void deleteUser(Long userId) {
