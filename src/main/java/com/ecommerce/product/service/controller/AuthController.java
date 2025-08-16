@@ -4,8 +4,9 @@ import com.ecommerce.product.service.dtos.JwtDtos.JwtResponse;
 import com.ecommerce.product.service.dtos.JwtDtos.LoginRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UserDto;
 import com.ecommerce.product.service.entity.User;
-import com.ecommerce.product.service.security.config.JwtConfig;
+import com.ecommerce.product.service.config.jwtConfigs.JwtConfig;
 import com.ecommerce.product.service.services.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
+@Tag(name = "Authorization API")
 public class AuthController {
     private final JwtConfig jwtConfig;
     private final AuthService authService;

@@ -5,6 +5,7 @@ import com.ecommerce.product.service.dtos.usersDtos.RegisterUserRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UpdateUserRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UserDto;
 import com.ecommerce.product.service.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
+@Tag(name = "Users API")
 public class UserController {
     private final UserService userService;
 

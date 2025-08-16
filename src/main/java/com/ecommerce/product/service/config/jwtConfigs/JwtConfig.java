@@ -1,4 +1,4 @@
-package com.ecommerce.product.service.security.config;
+package com.ecommerce.product.service.config.jwtConfigs;
 
 import io.jsonwebtoken.security.Keys;
 import lombok.Data;

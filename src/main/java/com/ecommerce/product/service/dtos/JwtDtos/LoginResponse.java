@@ -1,6 +1,6 @@
 package com.ecommerce.product.service.dtos.JwtDtos;
 
-import com.ecommerce.product.service.security.config.Jwt;
+import com.ecommerce.product.service.config.jwtConfigs.Jwt;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

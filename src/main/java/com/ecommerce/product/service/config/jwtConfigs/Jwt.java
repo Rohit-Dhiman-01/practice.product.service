@@ -1,4 +1,4 @@
-package com.ecommerce.product.service.security.config;
+package com.ecommerce.product.service.config.jwtConfigs;
 
 import com.ecommerce.product.service.entity.Role;
 import io.jsonwebtoken.Claims;

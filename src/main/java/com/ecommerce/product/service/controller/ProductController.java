@@ -4,9 +4,12 @@ import com.ecommerce.product.service.dtos.productDtos.ProductDto;
 import com.ecommerce.product.service.dtos.productDtos.RegisterProductRequest;
 import com.ecommerce.product.service.entity.Category;
 import com.ecommerce.product.service.entity.Product;
+import com.ecommerce.product.service.mappers.ProductMapper;
 import com.ecommerce.product.service.repository.CategoryRepository;
 import com.ecommerce.product.service.repository.ProductRepository;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +17,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
+@Tag(name = "Products API")
 public class ProductController {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductMapper productMapper;
 
     @GetMapping
     public List<ProductDto> getAllProduct(
@@ -29,7 +34,7 @@ public class ProductController {
         } else {
             productDtoList = productRepository.findByCategoryId(categoryId);
         }
-        return productDtoList.stream().map(this::toProductDto).toList();
+        return productDtoList.stream().map(productMapper::toDto).toList();
     }
 
     @PostMapping
@@ -41,10 +46,10 @@ public class ProductController {
         if (category == null) {
             return ResponseEntity.badRequest().build();
         }
-        var product = this.toEntity(request,category);
+        var product = productMapper.toEntity(request);
         productRepository.save(product);
 
-        var productDto = this.toProductDto(product);
+        var productDto = productMapper.toDto(product);
         var uri = uriBuilder.path("products/{id}").buildAndExpand(productDto.getId()).toUri();
         return ResponseEntity.created(uri).body(productDto);
     }
@@ -64,7 +69,7 @@ public class ProductController {
         }
         this.update(request,category,product);
         productRepository.save(product);
-        return ResponseEntity.ok(this.toProductDto(product));
+        return ResponseEntity.ok(productMapper.toDto(product));
     }
 
     @DeleteMapping("/{id}")
@@ -79,18 +84,18 @@ public class ProductController {
         return ResponseEntity.noContent().build();
     }
 
-//    Helper functions
-    private ProductDto toProductDto(Product product){
-        return new ProductDto(product.getId(), product.getName(),product.getDescription(),product.getPrice(),product.getCategory().getId());
-    }
-    private Product toEntity(RegisterProductRequest request, Category category){
-        Product product = new Product();
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.setPrice(request.getPrice());
-        product.setCategory(category);
-        return product;
-    }
+////    Helper functions
+//    private ProductDto toProductDto(Product product){
+//        return new ProductDto(product.getId(), product.getName(),product.getDescription(),product.getPrice(),product.getCategory().getId());
+//    }
+//    private Product toEntity(RegisterProductRequest request, Category category){
+//        Product product = new Product();
+//        product.setName(request.getName());
+//        product.setDescription(request.getDescription());
+//        product.setPrice(request.getPrice());
+//        product.setCategory(category);
+//        return product;
+//    }
     private void update(RegisterProductRequest request,Category category , Product product){
         product.setName(request.getName());
         product.setDescription(request.getDescription());

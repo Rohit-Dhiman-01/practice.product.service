@@ -1,4 +1,4 @@
-package com.ecommerce.product.service.security.config.securityRules;
+package com.ecommerce.product.service.config.securityRules;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

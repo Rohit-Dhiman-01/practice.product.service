@@ -1,4 +1,4 @@
-package com.ecommerce.product.service.security.config;
+package com.ecommerce.product.service.config.jwtConfigs;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

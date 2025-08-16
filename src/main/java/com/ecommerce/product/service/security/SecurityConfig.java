@@ -1,7 +1,7 @@
 package com.ecommerce.product.service.security;
 
-import com.ecommerce.product.service.security.config.JwtAuthenticationFilter;
-import com.ecommerce.product.service.security.config.securityRules.SecurityRules;
+import com.ecommerce.product.service.config.jwtConfigs.JwtAuthenticationFilter;
+import com.ecommerce.product.service.config.securityRules.SecurityRules;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
