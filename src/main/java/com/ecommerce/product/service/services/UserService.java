@@ -1,20 +1,22 @@
 package com.ecommerce.product.service.services;
 
+import com.ecommerce.product.service.config.jwtConfigs.UserPrincipal;
 import com.ecommerce.product.service.dtos.usersDtos.ChangePasswordRequest;
 import com.ecommerce.product.service.dtos.usersDtos.RegisterUserRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UpdateUserRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UserDto;
 import com.ecommerce.product.service.entity.Role;
-import com.ecommerce.product.service.entity.User;
 import com.ecommerce.product.service.exception.AccessDeniedException;
 import com.ecommerce.product.service.exception.DuplicateUserException;
 import com.ecommerce.product.service.exception.UserNotFoundException;
 import com.ecommerce.product.service.mappers.UserMapper;
 import com.ecommerce.product.service.repository.UserRepository;
-import java.time.LocalDateTime;
+
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,10 +65,19 @@ public class UserService {
     }
     public void changePassword(Long userId, ChangePasswordRequest request) {
         var user = userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException("User not found with id "+ userId));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication.getPrincipal() instanceof UserPrincipal principal)) {
+            throw new AccessDeniedException("Invalid authentication principal");
+        }
+        if (!user.getEmail().equals(principal.email())) {
+            throw new AccessDeniedException("You are not authorized to change this user's password");
+        }
+
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new AccessDeniedException("Password does not match");
         }
-        user.setPassword(request.getNewPassword());
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
     }
 }

@@ -31,4 +31,12 @@ public class Jwt {
     public String toString() {
         return Jwts.builder().claims(claims).signWith(secretKey).compact();
     }
+
+    public String getEmail() {
+        return claims.get("email", String.class);
+    }
+
+    public String getName() {
+        return claims.get("name", String.class);
+    }
 }

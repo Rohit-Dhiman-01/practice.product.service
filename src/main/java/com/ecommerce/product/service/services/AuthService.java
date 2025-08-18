@@ -1,5 +1,6 @@
 package com.ecommerce.product.service.services;
 
+import com.ecommerce.product.service.config.jwtConfigs.UserPrincipal;
 import com.ecommerce.product.service.dtos.JwtDtos.LoginRequest;
 import com.ecommerce.product.service.dtos.JwtDtos.LoginResponse;
 import com.ecommerce.product.service.entity.User;
@@ -22,7 +23,11 @@ public class AuthService {
 
     public User getCurrentUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userId = (Long) authentication.getPrincipal();
+//        var userId = (Long) authentication.getPrincipal();
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserPrincipal principal)) {
+            return null;
+        }
+        Long userId = principal.userId();
 
         return userRepository.findById(userId).orElse(null);
     }
