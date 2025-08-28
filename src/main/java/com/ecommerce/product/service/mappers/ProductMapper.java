@@ -14,6 +14,6 @@ public interface ProductMapper {
 
     Product toEntity(RegisterProductRequest productDto);
 
-    @Mapping(target = "id", ignore = true)
-    void update(ProductDto productDto, @MappingTarget Product product);
+//    @Mapping(target = "id", ignore = true)
+//    void update(ProductDto productDto, @MappingTarget Product product);
 }
