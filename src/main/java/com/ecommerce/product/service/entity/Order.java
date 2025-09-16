@@ -1,16 +1,17 @@
 package com.ecommerce.product.service.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "orders")
-@Data
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

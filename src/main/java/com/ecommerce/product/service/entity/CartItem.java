@@ -1,11 +1,12 @@
 package com.ecommerce.product.service.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "cart_items")
 public class CartItem {

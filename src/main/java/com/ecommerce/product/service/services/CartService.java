@@ -8,10 +8,9 @@ import com.ecommerce.product.service.exception.ProductNotFoundException;
 import com.ecommerce.product.service.mappers.CartMapper;
 import com.ecommerce.product.service.repository.CartRepository;
 import com.ecommerce.product.service.repository.ProductRepository;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor

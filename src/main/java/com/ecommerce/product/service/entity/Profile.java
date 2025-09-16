@@ -1,9 +1,8 @@
 package com.ecommerce.product.service.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.time.LocalDate;
+import lombok.Data;
 
 @Data
 @Entity

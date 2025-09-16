@@ -23,7 +23,8 @@ public class GlobalException {
     }
 
     @ExceptionHandler({DuplicateUserException.class,
-                       ProductNotFoundException.class})
+                       ProductNotFoundException.class,
+                       CartEmptyException.class})
     public ResponseEntity<ErrorDto> handleBadRequest(RuntimeException exception){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                 body(new ErrorDto(exception.getMessage(),HttpStatus.BAD_REQUEST.value()));
