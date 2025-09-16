@@ -9,6 +9,7 @@ import com.ecommerce.product.service.repository.CategoryRepository;
 import com.ecommerce.product.service.repository.ProductRepository;
 import java.util.List;
 
+import com.ecommerce.product.service.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +21,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/api/v1/products")
 @Tag(name = "Products API")
 public class ProductController {
-    private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
-    private final ProductMapper productMapper;
+    private final ProductService productService;
 
     @GetMapping
-    public List<ProductDto> getAllProduct(
-            @RequestParam(required = false, name = "categoryId") Byte categoryId
+    public List<ProductDto> getAllProducts(@RequestParam(required = false, name = "categoryId") Byte categoryId
     ){
-        List<Product> productDtoList;
-        if (categoryId == null){
-            productDtoList =  productRepository.findWithCategoryId();
-        } else {
-            productDtoList = productRepository.findByCategoryId(categoryId);
-        }
-        return productDtoList.stream().map(productMapper::toDto).toList();
+        return productService.getAllProducts(categoryId);
     }
 
     @PostMapping
@@ -42,64 +34,23 @@ public class ProductController {
             @RequestBody RegisterProductRequest request,
             UriComponentsBuilder uriBuilder
     ){
-        var category = categoryRepository.findById(request.getCategoryId()).orElse(null);
-        if (category == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        var product = productMapper.toEntity(request);
-        productRepository.save(product);
-
-        var productDto = productMapper.toDto(product);
+        ProductDto productDto = productService.createProduct(request);
         var uri = uriBuilder.path("products/{id}").buildAndExpand(productDto.getId()).toUri();
         return ResponseEntity.created(uri).body(productDto);
     }
 
     @PutMapping("/{id}")
-    public  ResponseEntity<ProductDto> updateProduct(
+    public ResponseEntity<ProductDto> updateProduct(
             @PathVariable Long id,
             @RequestBody RegisterProductRequest request
     ){
-        var product = productRepository.findById(id).orElse(null);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
-        var category = categoryRepository.findById(request.getCategoryId()).orElse(null);
-        if (category == null) {
-            return ResponseEntity.notFound().build();
-        }
-        this.update(request,category,product);
-        productRepository.save(product);
-        return ResponseEntity.ok(productMapper.toDto(product));
+        ProductDto productDto = productService.updateProduct(id, request);
+        return ResponseEntity.ok(productDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(
-            @PathVariable Long id
-    ){
-        var product = productRepository.findById(id).orElse(null);
-        if (product == null) {
-            return ResponseEntity.notFound().build();
-        }
-        productRepository.delete(product);
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
-    }
-
-////    Helper functions
-//    private ProductDto toProductDto(Product product){
-//        return new ProductDto(product.getId(), product.getName(),product.getDescription(),product.getPrice(),product.getCategory().getId());
-//    }
-//    private Product toEntity(RegisterProductRequest request, Category category){
-//        Product product = new Product();
-//        product.setName(request.getName());
-//        product.setDescription(request.getDescription());
-//        product.setPrice(request.getPrice());
-//        product.setCategory(category);
-//        return product;
-//    }
-    private void update(RegisterProductRequest request,Category category , Product product){
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.setPrice(request.getPrice());
-        product.setCategory(category);
     }
 }

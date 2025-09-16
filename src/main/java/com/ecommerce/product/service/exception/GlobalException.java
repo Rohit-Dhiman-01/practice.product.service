@@ -15,7 +15,8 @@ public class GlobalException {
             body(new ErrorDto(exception.getMessage(),HttpStatus.UNAUTHORIZED.value()));
     }
 
-    @ExceptionHandler({UserNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class,
+                       CartNotFoundException.class})
     public ResponseEntity<ErrorDto> handleNotFound (RuntimeException exception){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
                 body(new ErrorDto(exception.getMessage(),HttpStatus.NOT_FOUND.value()));

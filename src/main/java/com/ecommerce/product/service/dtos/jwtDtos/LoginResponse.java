@@ -1,4 +1,4 @@
-package com.ecommerce.product.service.dtos.JwtDtos;
+package com.ecommerce.product.service.dtos.jwtDtos;
 
 import com.ecommerce.product.service.config.jwtConfigs.Jwt;
 import lombok.AllArgsConstructor;

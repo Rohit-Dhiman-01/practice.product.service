@@ -1,8 +1,8 @@
 package com.ecommerce.product.service.services;
 
 import com.ecommerce.product.service.config.jwtConfigs.UserPrincipal;
-import com.ecommerce.product.service.dtos.JwtDtos.LoginRequest;
-import com.ecommerce.product.service.dtos.JwtDtos.LoginResponse;
+import com.ecommerce.product.service.dtos.jwtDtos.LoginRequest;
+import com.ecommerce.product.service.dtos.jwtDtos.LoginResponse;
 import com.ecommerce.product.service.entity.User;
 import com.ecommerce.product.service.exception.BadCredentialsException;
 import com.ecommerce.product.service.repository.UserRepository;

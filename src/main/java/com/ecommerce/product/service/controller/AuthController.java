@@ -1,7 +1,7 @@
 package com.ecommerce.product.service.controller;
 
-import com.ecommerce.product.service.dtos.JwtDtos.JwtResponse;
-import com.ecommerce.product.service.dtos.JwtDtos.LoginRequest;
+import com.ecommerce.product.service.dtos.jwtDtos.JwtResponse;
+import com.ecommerce.product.service.dtos.jwtDtos.LoginRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UserDto;
 import com.ecommerce.product.service.entity.User;
 import com.ecommerce.product.service.config.jwtConfigs.JwtConfig;

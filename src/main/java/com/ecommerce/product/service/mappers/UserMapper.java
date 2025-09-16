@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper {
+public interface    UserMapper {
     @Mapping(target = "currentTime", expression = "java(java.time.LocalDateTime.now())")
     UserDto toDto(User user);
     User toEntity(RegisterUserRequest request);
