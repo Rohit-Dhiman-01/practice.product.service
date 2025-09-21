@@ -2,9 +2,14 @@ package com.ecommerce.product.service.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
 @Entity
 @Table(name = "profiles")
 public class Profile {

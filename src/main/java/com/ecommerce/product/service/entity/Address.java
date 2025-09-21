@@ -1,11 +1,15 @@
 package com.ecommerce.product.service.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "addresses")
 public class Address {
     @Id

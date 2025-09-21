@@ -29,6 +29,14 @@ public class GlobalException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                 body(new ErrorDto(exception.getMessage(),HttpStatus.BAD_REQUEST.value()));
     }
+
+    @ExceptionHandler({OrderNotFoundException.class})
+    public ResponseEntity<ErrorDto> handleForbidden (RuntimeException exception){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).
+                body(new ErrorDto(exception.getMessage(),HttpStatus.FORBIDDEN.value()));
+    }
+
+//  Last Class where all other exception go
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleGeneric(Exception exception) {
         return ResponseEntity

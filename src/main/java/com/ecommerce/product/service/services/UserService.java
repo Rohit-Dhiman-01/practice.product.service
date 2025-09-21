@@ -11,7 +11,6 @@ import com.ecommerce.product.service.exception.DuplicateUserException;
 import com.ecommerce.product.service.exception.UserNotFoundException;
 import com.ecommerce.product.service.mappers.UserMapper;
 import com.ecommerce.product.service.repository.UserRepository;
-
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

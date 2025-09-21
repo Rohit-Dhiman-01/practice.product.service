@@ -7,10 +7,9 @@ import com.ecommerce.product.service.entity.Product;
 import com.ecommerce.product.service.mappers.ProductMapper;
 import com.ecommerce.product.service.repository.CategoryRepository;
 import com.ecommerce.product.service.repository.ProductRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
