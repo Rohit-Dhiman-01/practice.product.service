@@ -6,6 +6,6 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 public class CartSecurityRules implements SecurityRules{
     @Override
     public void configure(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
-        registry.requestMatchers("/carts/**").permitAll();
+        registry.requestMatchers("/api/v1/carts/**").permitAll();
     }
 }

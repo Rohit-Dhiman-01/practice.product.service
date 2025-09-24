@@ -6,6 +6,6 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 public class OrderSecurityRules implements SecurityRules {
     @Override
     public void configure(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
-        registry.requestMatchers("/orders/**").permitAll();
+        registry.requestMatchers("/api/v1/orders/**").permitAll();
     }
 }

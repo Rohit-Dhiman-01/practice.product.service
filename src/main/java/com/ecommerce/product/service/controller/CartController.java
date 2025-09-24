@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/carts")
+@RequestMapping("/api/v1/carts")
 public class CartController {
     private final CartService cartService;
     @PostMapping
