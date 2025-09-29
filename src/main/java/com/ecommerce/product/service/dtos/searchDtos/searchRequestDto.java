@@ -7,6 +7,8 @@ import lombok.Setter;
 @Setter
 public class searchRequestDto {
     private String query;
-    private int pageNumber;
-    private int pageSize;
+    private int pageNumber = 0 ;
+    private int pageSize = 5;
+    private String sortDirection = "ASC";
+    private String sortBy = "id";
 }

@@ -19,7 +19,7 @@ public class Product {
     private String description;
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST,  fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 }

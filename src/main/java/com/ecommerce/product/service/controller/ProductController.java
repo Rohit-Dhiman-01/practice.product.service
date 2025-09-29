@@ -2,15 +2,9 @@ package com.ecommerce.product.service.controller;
 
 import com.ecommerce.product.service.dtos.productDtos.ProductDto;
 import com.ecommerce.product.service.dtos.productDtos.RegisterProductRequest;
-import com.ecommerce.product.service.entity.Category;
-import com.ecommerce.product.service.entity.Product;
-import com.ecommerce.product.service.mappers.ProductMapper;
-import com.ecommerce.product.service.repository.CategoryRepository;
-import com.ecommerce.product.service.repository.ProductRepository;
-import java.util.List;
-
 import com.ecommerce.product.service.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
