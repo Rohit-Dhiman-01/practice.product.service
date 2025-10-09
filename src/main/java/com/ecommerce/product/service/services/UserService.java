@@ -1,6 +1,7 @@
 package com.ecommerce.product.service.services;
 
 import com.ecommerce.product.service.config.jwtConfigs.UserPrincipal;
+import com.ecommerce.product.service.config.redisConfigs.RedisService;
 import com.ecommerce.product.service.dtos.usersDtos.ChangePasswordRequest;
 import com.ecommerce.product.service.dtos.usersDtos.RegisterUserRequest;
 import com.ecommerce.product.service.dtos.usersDtos.UpdateUserRequest;
@@ -11,8 +12,10 @@ import com.ecommerce.product.service.exception.DuplicateUserException;
 import com.ecommerce.product.service.exception.UserNotFoundException;
 import com.ecommerce.product.service.mappers.UserMapper;
 import com.ecommerce.product.service.repository.UserRepository;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,19 +24,33 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final RedisService redisService;
 
     public Iterable<UserDto> getAllUsers(String sortBy) {
         if (!Set.of("name", "email").contains(sortBy))
             sortBy = "name";
 
-        return userRepository.findAll(Sort.by(sortBy))
+        String redisKeyName = "users::" + sortBy;
+//      Implementation of Redis
+        List<UserDto> redisUser = redisService.get("all_users", List.class);
+        if (redisUser != null && redisUser.isEmpty()) {
+            log.info("Returning users from Redis cache for sortBy: {}", sortBy);
+            return redisUser;
+        }
+//      Fetching User form DataBase
+        List<UserDto> users= userRepository.findAll(Sort.by(sortBy))
                 .stream()
                 .map(userMapper::toDto)
                 .toList();
+//      Saving of Redis for 45 second
+        redisService.set(redisKeyName, users, 45L);
+        log.info("Users cached in Redis for sortBy: {}", sortBy);
+        return users;
     }
 
     public UserDto getUserById(Long id){
